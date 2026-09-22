@@ -154,6 +154,30 @@ body {
   white-space: pre-line;
 }
 
+.chime-btn {
+  align-self: flex-start;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--accent);
+  background: transparent;
+  color: var(--brown);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.chime-btn:hover {
+  background: var(--bg-yellow-light);
+  transform: translateY(-2px);
+}
+
+.chime-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
+}
+
 .footer {
   margin-top: 24px;
   font-size: 13px;
