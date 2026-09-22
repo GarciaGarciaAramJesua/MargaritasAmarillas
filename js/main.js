@@ -23,7 +23,7 @@ class Petal {
     this.rotation = Math.random() * Math.PI * 2;
     this.rotationSpeed = (Math.random() - 0.5) * 0.03;
     this.opacity = 0.5 + Math.random() * 0.5;
-    this.color = Math.random() > 0.5 ? '#fffdf6' : '#f4c752';
+    this.color = Math.random() > 0.5 ? '#ffd23f' : '#f4c752';
   }
   update() {
     this.y += this.speedY;
@@ -56,59 +56,3 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
-
-// ---- Mensaje editable: guardar en localStorage y compartir por URL ----
-const STORAGE_KEY = 'margaritas-message';
-const messageEl = document.getElementById('message-text');
-const saveBtn = document.getElementById('save-btn');
-const shareBtn = document.getElementById('share-btn');
-
-function loadMessage() {
-  const params = new URLSearchParams(window.location.search);
-  const fromUrl = params.get('msg');
-  if (fromUrl) {
-    try {
-      messageEl.textContent = decodeURIComponent(escape(atob(fromUrl)));
-      return;
-    } catch (e) {
-      // ignore invalid encoding
-    }
-  }
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) messageEl.textContent = saved;
-}
-
-function showToast(text) {
-  const toast = document.createElement('div');
-  toast.textContent = text;
-  toast.style.cssText = `
-    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-    background: #7a5b2a; color: #fff; padding: 10px 20px; border-radius: 999px;
-    font-family: 'Quicksand', sans-serif; font-size: 14px; z-index: 10;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.2); opacity: 0; transition: opacity 0.3s;
-  `;
-  document.body.appendChild(toast);
-  requestAnimationFrame(() => (toast.style.opacity = '1'));
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    setTimeout(() => toast.remove(), 300);
-  }, 2200);
-}
-
-saveBtn.addEventListener('click', () => {
-  localStorage.setItem(STORAGE_KEY, messageEl.textContent.trim());
-  showToast('¡Mensaje guardado! 🌼');
-});
-
-shareBtn.addEventListener('click', async () => {
-  const encoded = btoa(unescape(encodeURIComponent(messageEl.textContent.trim())));
-  const url = `${window.location.origin}${window.location.pathname}?msg=${encoded}`;
-  try {
-    await navigator.clipboard.writeText(url);
-    showToast('¡Enlace copiado! 📋');
-  } catch (e) {
-    prompt('Copia este enlace:', url);
-  }
-});
-
-loadMessage();
