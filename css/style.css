@@ -95,6 +95,24 @@ body {
   transform-origin: center;
 }
 
+.background-bouquet {
+  opacity: 0.78;
+}
+
+.background-flower {
+  transform-origin: center;
+  transform-box: fill-box;
+  opacity: 0;
+  animation: background-bloom 0.75s ease-out forwards, sway-flower 5s ease-in-out infinite;
+  animation-delay: var(--d, 0s), calc(var(--d, 0s) + 0.75s);
+}
+
+@keyframes background-bloom {
+  0% { opacity: 0; transform: scale(0.15); }
+  70% { opacity: 1; transform: scale(0.78); }
+  100% { opacity: 1; transform: scale(0.68); }
+}
+
 @keyframes bloom-in {
   0% { opacity: 0; transform: scale(0.2); }
   70% { opacity: 1; transform: scale(1.08); }
